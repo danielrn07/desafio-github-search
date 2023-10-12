@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.RepositoryMainActivity">
 
     <TextView
         android:id="@+id/tv_titulo"
@@ -39,10 +39,9 @@
         app:layout_constraintTop_toBottomOf="@id/et_nome_usuario" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_lista_repositories"
+        android:id="@+id/rv_list_repositories"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

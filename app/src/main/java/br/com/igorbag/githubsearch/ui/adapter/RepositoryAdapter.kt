@@ -1,57 +1,63 @@
 package br.com.igorbag.githubsearch.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import br.com.igorbag.githubsearch.R
+import br.com.igorbag.githubsearch.databinding.RepositoryItemBinding
 import br.com.igorbag.githubsearch.domain.Repository
 
-class RepositoryAdapter(private val repositories: List<Repository>) :
-    RecyclerView.Adapter<RepositoryAdapter.ViewHolder>() {
+class RepositoryAdapter : ListAdapter<Repository, RepositoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+
+//    RecyclerView.Adapter<RepositoryAdapter.ViewHolder>() {
 
     var carItemLister: (Repository) -> Unit = {}
     var btnShareLister: (Repository) -> Unit = {}
 
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Repository>() {
+            override fun areItemsTheSame(oldItem: Repository, newItem: Repository): Boolean {
+                return oldItem.name == newItem.name
+            }
+
+            @SuppressLint("DiffUtilEquals")
+            override fun areContentsTheSame(oldItem: Repository, newItem: Repository): Boolean {
+                return oldItem.name == newItem.name
+            }
+        }
+    }
+
     // Cria uma nova view
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.repository_item, parent, false)
-        return ViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        return MyViewHolder(
+            RepositoryItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     // Pega o conteudo da view e troca pela informacao de item de uma lista
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         //@TODO 8 -  Realizar o bind do viewHolder
-        //Exemplo de Bind
-        //  holder.preco.text = repositories[position].atributo
 
-        // Exemplo de click no item
-        //holder.itemView.setOnClickListener {
-        // carItemLister(repositores[position])
-        //}
+        val repository = getItem(position)
 
-        // Exemplo de click no btn Share
-        //holder.favorito.setOnClickListener {
-        //    btnShareLister(repositores[position])
-        //}
+        holder.apply {
+            binding.apply {
+                tvRepositoryName.text = repository.name
+            }
+        }
     }
 
-    // Pega a quantidade de repositorios da lista
-    //@TODO 9 - realizar a contagem da lista
-    override fun getItemCount(): Int = 0
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        //@TODO 10 - Implementar o ViewHolder para os repositorios
-        //Exemplo:
-        //val atributo: TextView
-
-        //init {
-        //    view.apply {
-        //        atributo = findViewById(R.id.item_view)
-        //    }
-
-    }
+    inner class MyViewHolder(val binding: RepositoryItemBinding):
+            RecyclerView.ViewHolder(binding.root)
 }
 
 
