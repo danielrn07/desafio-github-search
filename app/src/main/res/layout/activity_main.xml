@@ -4,48 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_primary"
     tools:context=".ui.RepositoryMainActivity">
 
     <TextView
         android:id="@+id/tv_titulo"
-        style="@style/TextAppearance.MaterialComponents.Headline5"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="@string/app_name"
+        android:textColor="@color/main_secondary"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/et_nome_usuario"
-        android:layout_width="0dp"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_user_name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_margin="16dp"
-        android:ems="10"
-        android:hint="@string/nome_usuario"
-        android:inputType="textCapSentences"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_titulo" />
+        app:layout_constraintTop_toBottomOf="@id/tv_titulo">
 
-    <Button
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/nome_usuario"
+            android:inputType="textCapSentences"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_confirmar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="4dp"
         android:text="@string/confirmar"
-        app:layout_constraintEnd_toEndOf="@id/et_nome_usuario"
-        app:layout_constraintStart_toStartOf="@id/et_nome_usuario"
-        app:layout_constraintTop_toBottomOf="@id/et_nome_usuario" />
+        app:layout_constraintEnd_toEndOf="@id/til_user_name"
+        app:layout_constraintStart_toStartOf="@id/til_user_name"
+        app:layout_constraintTop_toBottomOf="@id/til_user_name" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_list_repositories"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_confirmar"
         tools:listitem="@layout/repository_item" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

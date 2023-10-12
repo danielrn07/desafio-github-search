@@ -13,9 +13,7 @@ import br.com.igorbag.githubsearch.domain.Repository
 
 class RepositoryAdapter : ListAdapter<Repository, RepositoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
-//    RecyclerView.Adapter<RepositoryAdapter.ViewHolder>() {
-
-    var carItemLister: (Repository) -> Unit = {}
+    var bodyItemList: (Repository) -> Unit = {}
     var btnShareLister: (Repository) -> Unit = {}
 
     companion object {
@@ -31,7 +29,6 @@ class RepositoryAdapter : ListAdapter<Repository, RepositoryAdapter.MyViewHolder
         }
     }
 
-    // Cria uma nova view
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
             RepositoryItemBinding.inflate(
@@ -42,7 +39,6 @@ class RepositoryAdapter : ListAdapter<Repository, RepositoryAdapter.MyViewHolder
         )
     }
 
-    // Pega o conteudo da view e troca pela informacao de item de uma lista
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         //@TODO 8 -  Realizar o bind do viewHolder
 
@@ -51,13 +47,18 @@ class RepositoryAdapter : ListAdapter<Repository, RepositoryAdapter.MyViewHolder
         holder.apply {
             binding.apply {
                 tvRepositoryName.text = repository.name
+
+                btnShare.setOnClickListener {
+                    btnShareLister(repository)
+                }
+
+                body.setOnClickListener {
+                    bodyItemList(repository)
+                }
             }
         }
     }
 
-
-    inner class MyViewHolder(val binding: RepositoryItemBinding):
-            RecyclerView.ViewHolder(binding.root)
+    inner class MyViewHolder(val binding: RepositoryItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }
-
-

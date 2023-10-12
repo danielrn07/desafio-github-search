@@ -1,6 +1,8 @@
-package br.com.igorbag.githubsearch.ui
+package br.com.igorbag.githubsearch.ui.viewmodel
 
-import android.util.Log
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.igorbag.githubsearch.data.GitHubService
@@ -41,4 +43,25 @@ class RepositoryViewModel : ViewModel() {
             override fun onFailure(call: Call<List<Repository>>, t: Throwable) {}
         })
     }
+
+    fun shareRepositoryLink(context: Context, urlRepository: String) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, urlRepository)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        context.startActivity(shareIntent)
+    }
+
+    fun openBrowser(context: Context, urlRepository: String) {
+        context.startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(urlRepository)
+            )
+        )
+    }
+
 }
